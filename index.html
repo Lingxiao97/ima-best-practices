@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkBuddy × IMA 知识库最佳实践</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222633;
+    --border: #2e3345;
+    --text: #e4e7f0;
+    --text2: #9ca3b8;
+    --accent: #6c5ce7;
+    --accent2: #a29bfe;
+    --green: #00cec9;
+    --orange: #fdcb6e;
+    --red: #ff7675;
+    --pink: #fd79a8;
+    --blue: #74b9ff;
+    --gradient1: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    --gradient2: linear-gradient(135deg, #00cec9 0%, #55efc4 100%);
+    --gradient3: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    padding: 80px 40px 60px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -120px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(108,92,231,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 20px;
+    background: rgba(108,92,231,0.15);
+    border: 1px solid rgba(108,92,231,0.3);
+    color: var(--accent2);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #e4e7f0, #a29bfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 16px;
+  }
+  .hero h1 span {
+    background: var(--gradient1);
+    -webkit-background-clip: text;
+  }
+  .hero p {
+    font-size: 17px;
+    color: var(--text2);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Container */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* Nav */
+  .nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 40px auto 48px;
+    max-width: 800px;
+  }
+  .nav a {
+    padding: 8px 18px;
+    border-radius: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .nav a:hover {
+    background: var(--surface2);
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  /* Section */
+  .section { margin-bottom: 56px; scroll-margin-top: 24px; }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent2);
+    margin-bottom: 12px;
+  }
+  .section-label .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .section h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+  .section p.desc {
+    color: var(--text2);
+    font-size: 15px;
+    margin-bottom: 24px;
+    max-width: 680px;
+  }
+
+  /* Cards */
+  .card-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all 0.25s;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .card-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  .card-icon.purple { background: rgba(108,92,231,0.15); }
+  .card-icon.teal { background: rgba(0,206,201,0.15); }
+  .card-icon.orange { background: rgba(253,203,110,0.15); }
+  .card-icon.pink { background: rgba(253,121,168,0.15); }
+  .card h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* Flow */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 24px 0;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 20px;
+    text-align: center;
+    min-width: 120px;
+    transition: all 0.2s;
+  }
+  .flow-step:hover { border-color: var(--accent); }
+  .flow-step .emoji { font-size: 24px; margin-bottom: 6px; }
+  .flow-step .label { font-size: 13px; font-weight: 600; }
+  .flow-step .sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border);
+    border-radius: 1px;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -25px; top: 8px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+  .timeline-item h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .timeline-item p {
+    font-size: 14px;
+    color: var(--text2);
+  }
+
+  /* Code block */
+  .code-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .code-block pre {
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #c8ccd8;
+  }
+  .code-block .comment { color: #636d83; }
+  .code-block .keyword { color: #c678dd; }
+  .code-block .string { color: #98c379; }
+  .code-block .func { color: #61afef; }
+  .code-block .param { color: #e5c07b; }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    background: var(--surface);
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--accent2);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(108,92,231,0.04); }
+  td code {
+    background: var(--surface2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--green);
+  }
+
+  /* Callout */
+  .callout {
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin: 20px 0;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .callout .icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .callout.tip {
+    background: rgba(0,206,201,0.08);
+    border: 1px solid rgba(0,206,201,0.2);
+  }
+  .callout.warning {
+    background: rgba(253,203,110,0.08);
+    border: 1px solid rgba(253,203,110,0.2);
+  }
+  .callout.danger {
+    background: rgba(255,118,117,0.08);
+    border: 1px solid rgba(255,118,117,0.2);
+  }
+  .callout .title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  .callout .body {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* Pill */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .pill.purple { background: rgba(108,92,231,0.15); color: var(--accent2); }
+  .pill.teal { background: rgba(0,206,201,0.15); color: var(--green); }
+  .pill.orange { background: rgba(253,203,110,0.15); color: var(--orange); }
+  .pill.red { background: rgba(255,118,117,0.15); color: var(--red); }
+
+  /* Flywheel */
+  .flywheel-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 32px 0;
+  }
+  .flywheel {
+    width: 360px; height: 360px;
+    position: relative;
+  }
+  .flywheel .ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 280px; height: 280px;
+    border: 2px dashed var(--border);
+    border-radius: 50%;
+    animation: spin 30s linear infinite;
+  }
+  @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+  .flywheel .node {
+    position: absolute;
+    width: 100px;
+    text-align: center;
+  }
+  .flywheel .node .icon { font-size: 28px; }
+  .flywheel .node .label { font-size: 12px; font-weight: 600; margin-top: 4px; }
+  .flywheel .node.top { top: -10px; left: 50%; transform: translateX(-50%); }
+  .flywheel .node.right { right: -20px; top: 50%; transform: translateY(-50%); }
+  .flywheel .node.bottom { bottom: -10px; left: 50%; transform: translateX(-50%); }
+  .flywheel .node.left { left: -20px; top: 50%; transform: translateY(-50%); }
+  .flywheel .center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: var(--gradient1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(108,92,231,0.3);
+  }
+  .flywheel .center .text {
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.3;
+  }
+
+  /* Architecture diagram */
+  .arch-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-width: 700px;
+    margin: 24px auto;
+  }
+  .arch-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  .arch-box {
+    flex: 1;
+    max-width: 220px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .arch-box:hover { border-color: var(--accent); }
+  .arch-box .emoji { font-size: 24px; margin-bottom: 6px; }
+  .arch-box .title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .arch-box .sub { font-size: 11px; color: var(--text2); }
+  .arch-connector {
+    text-align: center;
+    color: var(--accent);
+    font-size: 18px;
+    padding: 4px 0;
+  }
+
+  /* Automation card */
+  .auto-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .auto-card .icon-wrap {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: var(--gradient1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  .auto-card .info h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .auto-card .info p { font-size: 13px; color: var(--text2); }
+  .auto-card .tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+
+  /* Checklist */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 14px;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .check {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    background: rgba(0,206,201,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--text2);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .hero { padding: 48px 20px 36px; }
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 15px; }
+    .section h2 { font-size: 22px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+    .auto-card { flex-direction: column; text-align: center; }
+    .flywheel-wrap { transform: scale(0.8); }
+  }
+
+  /* Smooth scroll */
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-badge">✦ BEST PRACTICES GUIDE</div>
+  <h1>WorkBuddy × IMA<br>知识库最佳实践</h1>
+  <p>从零搭建一个自生长的知识飞轮——让 AI 当你的「大脑」和「手脚」，知识越用越值钱</p>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="#philosophy">核心理念</a>
+  <a href="#architecture">三层架构</a>
+  <a href="#workflow">完整工作流</a>
+  <a href="#api">API 速查</a>
+  <a href="#flywheel">知识飞轮</a>
+  <a href="#automation">自动化</a>
+  <a href="#case">实战案例</a>
+  <a href="#checklist">落地清单</a>
+</nav>
+
+<div class="container">
+
+<!-- 1. Philosophy -->
+<section class="section" id="philosophy">
+  <div class="section-label"><span class="dot"></span>01 / 核心理念</div>
+  <h2>IMA 是大脑，WorkBuddy 是手脚</h2>
+  <p class="desc">两者配合的核心逻辑很简单：IMA 提供云端知识库 + 语义搜索，WorkBuddy 负责自动消化、整理和定时维护。一个负责「记住」，一个负责「干活」。</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon purple">🧠</div>
+      <h3>IMA 知识库</h3>
+      <p>云端语义搜索引擎。丢进去的任何东西——网页、文件、笔记——都能被自然语言检索到。不需要精确关键词，说人话就能搜。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon teal">🤖</div>
+      <h3>WorkBuddy Agent</h3>
+      <p>自动化执行引擎。能读网页、写笔记、调 API、定时跑任务。把「手动整理知识」变成「自动消化知识」。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon orange">🔄</div>
+      <h3>飞轮效应</h3>
+      <p>素材进库 → AI 消化成笔记 → 问答沉淀回库 → 自动化持续采集。知识库越用越丰富，检索越用越精准。</p>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <span class="icon">💡</span>
+    <div>
+      <div class="title">最小闭环 &gt; 完美架构</div>
+      <div class="body">不要一上来就建完美的分类体系。先跑通「采集→消化→入库」这个小循环，有了真实使用反馈后再优化分类。空架子没有任何价值。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Architecture -->
+<section class="section" id="architecture">
+  <div class="section-label"><span class="dot"></span>02 / 三层架构</div>
+  <h2>原始素材 → AI 消化笔记 → 结构化知识</h2>
+  <p class="desc">知识不是丢进去就完了。按三层架构组织，让每一层都有明确的价值——原始层保证可溯源，消化层保证可理解，结构层保证可检索。</p>
+
+  <div class="arch-diagram">
+    <div class="arch-row">
+      <div class="arch-box" style="border-color: var(--orange);">
+        <div class="emoji">📦</div>
+        <div class="title">原始素材层</div>
+        <div class="sub">网页、PDF、文件<br>import_urls / 上传文件</div>
+      </div>
+    </div>
+    <div class="arch-connector">⬇ import_doc</div>
+    <div class="arch-row">
+      <div class="arch-box" style="border-color: var(--green);">
+        <div class="emoji">📝</div>
+        <div class="title">消化笔记层</div>
+        <div class="sub">AI 摘要 + 结构化笔记<br>关键要点 / 决策 / Q&A</div>
+      </div>
+    </div>
+    <div class="arch-connector">⬇ add_knowledge (media_type=11)</div>
+    <div class="arch-row">
+      <div class="arch-box" style="border-color: var(--accent);">
+        <div class="emoji">🧩</div>
+        <div class="title">知识库检索层</div>
+        <div class="sub">语义搜索 + 推荐问题<br>search_knowledge</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warning">
+    <span class="icon">⚠️</span>
+    <div>
+      <div class="title">消化不是复述</div>
+      <div class="body">AI 消化笔记的核心价值是「提取决策点和行动项」，不是把原文换个说法再说一遍。好的消化笔记应该让读者 30 秒内判断「这篇文章对我有没有用」。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Workflow -->
+<section class="section" id="workflow">
+  <div class="section-label"><span class="dot"></span>03 / 完整工作流</div>
+  <h2>从采集到飞轮，五步闭环</h2>
+  <p class="desc">每一轮循环都在让知识库更值钱。以下是完整的操作流程，每一个环节都有对应的 API。</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="emoji">🔍</div>
+      <div class="label">采集素材</div>
+      <div class="sub">import_urls / 上传文件</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="emoji">🧠</div>
+      <div class="label">AI 消化</div>
+      <div class="sub">import_doc 创建笔记</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="emoji">📚</div>
+      <div class="label">入库关联</div>
+      <div class="sub">add_knowledge (type=11)</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="emoji">🔎</div>
+      <div class="label">检索使用</div>
+      <div class="sub">search_knowledge</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="emoji">🔄</div>
+      <div class="label">问答沉淀</div>
+      <div class="sub">好答案 → 新笔记 → 入库</div>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <h4>Step 1 · 分类建库</h4>
+      <p>按领域拆分 3-5 个子知识库（如「大模型技术」「产品方法论」「行业动态」），避免一个大杂烩。用 <code>search_knowledge_base</code> 查看现有库，按需用 IMA 客户端新建。</p>
+    </div>
+    <div class="timeline-item">
+      <h4>Step 2 · 批量导入原始素材</h4>
+      <p>用 <code>import_urls</code> 一次添加 1-10 个网页。文件用上传流程。按方向分批导入，每批对应一个子领域。</p>
+    </div>
+    <div class="timeline-item">
+      <h4>Step 3 · AI 消化为结构化笔记</h4>
+      <p>每批素材消化为一篇笔记，包含：核心观点、关键数据、决策点、延伸问题。用 <code>import_doc</code> 创建笔记。</p>
+    </div>
+    <div class="timeline-item">
+      <h4>Step 4 · 笔记关联到知识库</h4>
+      <p>用 <code>add_knowledge</code>（<code>media_type=11</code>）将笔记链接到知识库。这样笔记内容也能被语义搜索到。</p>
+    </div>
+    <div class="timeline-item">
+      <h4>Step 5 · 设置自动化飞轮</h4>
+      <p>用 WorkBuddy 的 <code>automation_update</code> 创建定时任务，周期性采集+消化+入库，让知识库自己长大。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. API Reference -->
+<section class="section" id="api">
+  <div class="section-label"><span class="dot"></span>04 / API 速查</div>
+  <h2>核心接口一览</h2>
+  <p class="desc">所有接口基于 <code>https://ima.qq.com/openapi/wiki/v1/</code>，POST + JSON body，需携带 Client ID 和 API Key。</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>场景</th>
+          <th>接口</th>
+          <th>关键参数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>添加网页到知识库</td>
+          <td><code>import_urls</code></td>
+          <td><code>urls[]</code> (1-10), <code>knowledge_base_id</code></td>
+        </tr>
+        <tr>
+          <td>创建笔记</td>
+          <td><code>import_doc</code></td>
+          <td><code>title</code>, <code>content</code> (Markdown)</td>
+        </tr>
+        <tr>
+          <td>笔记关联到知识库</td>
+          <td><code>add_knowledge</code></td>
+          <td><code>media_type=11</code>, <code>note_info.content_id</code></td>
+        </tr>
+        <tr>
+          <td>上传文件到知识库</td>
+          <td>check → create_media → COS → <code>add_knowledge</code></td>
+          <td><code>media_type</code>, <code>file_info</code></td>
+        </tr>
+        <tr>
+          <td>搜索知识库内容</td>
+          <td><code>search_knowledge</code></td>
+          <td><code>query</code>, <code>knowledge_base_id</code></td>
+        </tr>
+        <tr>
+          <td>浏览知识库列表</td>
+          <td><code>search_knowledge_base</code></td>
+          <td><code>query</code> (空字符串=全部)</td>
+        </tr>
+        <tr>
+          <td>浏览知识库内容</td>
+          <td><code>get_knowledge_list</code></td>
+          <td><code>knowledge_base_id</code>, <code>cursor</code></td>
+        </tr>
+        <tr>
+          <td>获取可添加的知识库</td>
+          <td><code>get_addable_knowledge_base_list</code></td>
+          <td><code>cursor</code>, <code>limit</code></td>
+        </tr>
+        <tr>
+          <td>查看/导出原文</td>
+          <td><code>get_media_info</code></td>
+          <td><code>media_id</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout danger">
+    <span class="icon">🚫</span>
+    <div>
+      <div class="title">安全门（文件上传必读）</div>
+      <div class="body">
+        上传文件有 4 道安全门：<strong>GATE 1</strong> 类型检查（preflight-check.cjs，视频/音频拒绝）→
+        <strong>GATE 2</strong> 命名检查（title 必须等于 file_name）→
+        <strong>GATE 3</strong> 重名检查（check_repeated_names，不可替换只能保留两者）→
+        <strong>GATE 4</strong> 上传出错即停（COS 上传非零退出码则不执行 add_knowledge）。
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:28px; margin-bottom:16px;">常用代码片段</h3>
+
+  <div class="code-block">
+<pre><span class="comment"># 批量添加网页到知识库</span>
+ima_api <span class="string">"openapi/wiki/v1/import_urls"</span> <span class="string">'{
+  "knowledge_base_id": "&lt;kb_id&gt;",
+  "urls": [
+    "https://example.com/article1",
+    "https://example.com/article2"
+  ]
+}'</span>
+
+<span class="comment"># 创建笔记</span>
+ima_api <span class="string">"openapi/wiki/v1/import_doc"</span> <span class="string">'{
+  "title": "笔记标题",
+  "content": "Markdown 内容..."
+}'</span>
+
+<span class="comment"># 笔记关联到知识库</span>
+ima_api <span class="string">"openapi/wiki/v1/add_knowledge"</span> <span class="string">'{
+  "media_type": 11,
+  "note_info": { "content_id": "&lt;note_id&gt;" },
+  "title": "笔记标题",
+  "knowledge_base_id": "&lt;kb_id&gt;"
+}'</span>
+
+<span class="comment"># 语义搜索知识库</span>
+ima_api <span class="string">"openapi/wiki/v1/search_knowledge"</span> <span class="string">'{
+  "query": "自然语言查询",
+  "knowledge_base_id": "&lt;kb_id&gt;",
+  "cursor": ""
+}'</span></pre>
+  </div>
+</section>
+
+<!-- 5. Flywheel -->
+<section class="section" id="flywheel">
+  <div class="section-label"><span class="dot"></span>05 / 知识飞轮</div>
+  <h2>让知识库自己长大</h2>
+  <p class="desc">飞轮的核心不是「存储」，而是「复利」——每一次检索、每一次问答，都让知识库变得更厚。三条飞轮策略，按需组合。</p>
+
+  <div class="flywheel-wrap">
+    <div class="flywheel">
+      <div class="ring"></div>
+      <div class="node top">
+        <div class="icon">📥</div>
+        <div class="label">采集</div>
+      </div>
+      <div class="node right">
+        <div class="icon">🧠</div>
+        <div class="label">消化</div>
+      </div>
+      <div class="node bottom">
+        <div class="icon">📚</div>
+        <div class="label">入库</div>
+      </div>
+      <div class="node left">
+        <div class="icon">🔎</div>
+        <div class="label">检索</div>
+      </div>
+      <div class="center">
+        <div class="text">知识<br>飞轮</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon teal">🔁</div>
+      <h3>数据飞轮</h3>
+      <p>四层闭环：监控（发现数据需求）→ 分析（定位数据缺口）→ 规划（设计采集策略）→ 执行（合成/采集数据）。每一轮让模型更好，更好则吸引更多使用，更多使用则产生更多数据。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon orange">📖</div>
+      <h3>编译型知识库</h3>
+      <p>Karpathy 的 LLM Wiki 思路：与其每次从原始文档 Retrieve，不如预先 Compile——把原始素材消化成高质量笔记，检索时直接命中结构化知识。Ingest → Lint → Query。</p>
+    </div>
+    <div class="card">
+      <div class="card-icon pink">🎯</div>
+      <h3>CODE 方法</h3>
+      <p>Tiago Forte 的个人知识管理法：<strong>C</strong>ollect（采集一切可能有用的）→ <strong>O</strong>rganize（按可操作性分类）→ <strong>D</strong>istill（逐层提炼摘要）→ <strong>E</strong>xpress（输出验证理解）。与三层架构完美对应。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Automation -->
+<section class="section" id="automation">
+  <div class="section-label"><span class="dot"></span>06 / 自动化</div>
+  <h2>定时飞轮，无人值守</h2>
+  <p class="desc">用 WorkBuddy 的 automation 系统设定定时任务，让知识库每周自动采集、消化、入库。</p>
+
+  <div class="auto-card">
+    <div class="icon-wrap">⚡</div>
+    <div class="info">
+      <h3>每周 AI 前沿知识采集</h3>
+      <p>每周一上午 9:00 自动运行，搜索本周 AI 领域重要进展，消化为结构化笔记，导入知识库。</p>
+      <div class="tags">
+        <span class="pill purple">RRULE: FREQ=WEEKLY;BYDAY=MO;BYHOUR=9</span>
+        <span class="pill teal">自动采集</span>
+        <span class="pill orange">AI 消化</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px;">
+    <h3 style="margin-bottom: 12px;">创建自动化的要点</h3>
+    <div class="card-grid">
+      <div class="card">
+        <h3>📋 Prompt 要自包含</h3>
+        <p>automation 运行时没有上下文，prompt 必须完整描述要做什么、搜什么关键词、导入哪个知识库、消化笔记的格式要求。</p>
+      </div>
+      <div class="card">
+        <h3>⏰ 频率别太高</h3>
+        <p>推荐每周一次。每日采集容易堆积未消化的素材，违背「先消化再入库」的原则。宁可少而精，不要多而乱。</p>
+      </div>
+      <div class="card">
+        <h3>🎯 方向要聚焦</h3>
+        <p>每个自动化聚焦一个方向（如「Code Agent 评测」），不要一个大而全的 prompt 试图覆盖所有领域。方向越窄，消化质量越高。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Case Study -->
+<section class="section" id="case">
+  <div class="section-label"><span class="dot"></span>07 / 实战案例</div>
+  <h2>大模型知识库建设实录</h2>
+  <p class="desc">以下是一次完整落地的全过程记录——从选择知识库到三个方向的素材导入、消化、关联，最后设置自动化。</p>
+
+  <div class="card-grid" style="margin-bottom: 24px;">
+    <div class="card" style="border-left: 3px solid var(--accent);">
+      <div class="card-icon purple">🤖</div>
+      <h3>方向一：Code Agent 评测</h3>
+      <p>4 篇文章导入 → 消化笔记涵盖 HumanEval、SWE-bench、LiveCodeBench、pass@k 指标体系、私有评测方法论</p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--green);">
+      <div class="card-icon teal">📊</div>
+      <h3>方向二：大模型数据策略</h3>
+      <p>4 篇文章导入 → 消化笔记涵盖数据飞轮四层闭环、MAPE 控制周期、合成数据、RLHF/DPO 对齐</p>
+    </div>
+    <div class="card" style="border-left: 3px solid var(--orange);">
+      <div class="card-icon orange">🔄</div>
+      <h3>方向三：知识飞轮</h3>
+      <p>4 篇文章导入 → 消化笔记涵盖 Karpathy LLM Wiki、三层架构（raw/wiki/schema）、CODE 方法、RAG vs Compile</p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom: 12px;">操作数据一览</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>环节</th>
+          <th>数量</th>
+          <th>接口</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>导入原始素材</td>
+          <td>12 篇网页文章</td>
+          <td><code>import_urls</code> × 3 批</td>
+        </tr>
+        <tr>
+          <td>消化结构化笔记</td>
+          <td>3 篇</td>
+          <td><code>import_doc</code> × 3</td>
+        </tr>
+        <tr>
+          <td>笔记关联知识库</td>
+          <td>3 条</td>
+          <td><code>add_knowledge</code> × 3 (media_type=11)</td>
+        </tr>
+        <tr>
+          <td>自动化任务</td>
+          <td>1 个</td>
+          <td><code>automation_update</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout tip">
+    <span class="icon">✅</span>
+    <div>
+      <div class="title">消化笔记模板</div>
+      <div class="body">
+        每篇消化笔记包含以下固定结构，确保检索时信息密度足够：<br>
+        <strong>1. 核心观点</strong>（3-5 条）·
+        <strong>2. 关键数据/指标</strong> ·
+        <strong>3. 方法论/框架</strong> ·
+        <strong>4. 决策点</strong>（我该怎么做？）·
+        <strong>5. 延伸问题</strong>（值得继续深挖的点）
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Checklist -->
+<section class="section" id="checklist">
+  <div class="section-label"><span class="dot"></span>08 / 落地清单</div>
+  <h2>从零开始，照着做就行</h2>
+  <p class="desc">按顺序完成以下步骤，即可拥有一个自生长的知识飞轮。</p>
+
+  <ul class="checklist">
+    <li>
+      <div class="check">✓</div>
+      <div><strong>配置 IMA OpenAPI 凭证</strong> — Client ID 和 API Key 保存到 <code>~/.config/ima/</code></div>
+    </li>
+    <li>
+      <div class="check">✓</div>
+      <div><strong>确认目标知识库</strong> — 用 <code>search_knowledge_base</code> 查看现有库，或新建一个</div>
+    </li>
+    <li>
+      <div class="check">✓</div>
+      <div><strong>规划 3-5 个子方向</strong> — 按你关注的领域拆分，每个方向有明确的采集关键词</div>
+    </li>
+    <li>
+      <div class="check">✓</div>
+      <div><strong>按方向批量导入素材</strong> — 用 <code>import_urls</code> 每次添加 1-10 篇网页</div>
+    </li>
+    <li>
+      <div class="check">✓</div>
+      <div><strong>AI 消化为结构化笔记</strong> — 每个方向一篇消化笔记，用 <code>import_doc</code> 创建</div>
+    </li>
+    <li>
+      <div class="check">✓</div>
+      <div><strong>笔记关联到知识库</strong> — <code>add_knowledge</code> (media_type=11) 链接笔记到 KB</div>
+    </li>
+    <li>
+      <div class="check">✓</div>
+      <div><strong>验证检索效果</strong> — 用自然语言搜索，确认素材和笔记都能被搜到</div>
+    </li>
+    <li>
+      <div class="check">✓</div>
+      <div><strong>设置自动化</strong> — 创建定时任务，周期性采集+消化+入库</div>
+    </li>
+    <li>
+      <div class="check">✓</div>
+      <div><strong>问答沉淀</strong> — 每次高质量的问答，考虑沉淀为笔记入库</div>
+    </li>
+    <li>
+      <div class="check">✓</div>
+      <div><strong>定期维护</strong> — 每月审视知识库，清理过时内容，优化分类</div>
+    </li>
+  </ul>
+</section>
+
+<!-- Closing -->
+<div class="callout tip" style="margin-top: 24px;">
+  <span class="icon">🚀</span>
+  <div>
+    <div class="title">一句话总结</div>
+    <div class="body">知识库的价值不在于「存了多少」，而在于「能不能被用到」。三层架构保证质量，飞轮机制保证增长，自动化保证持续。先跑起来，再优化。</div>
+  </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>WorkBuddy × IMA Knowledge Base Best Practices · 2026</p>
+  <p style="margin-top: 4px; opacity: 0.6;">Built with ❤️ and AI</p>
+</div>
+
+</body>
+</html>
